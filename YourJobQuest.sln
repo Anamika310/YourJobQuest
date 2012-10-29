@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YourJobQuest", "YourJobQuest\YourJobQuest.csproj", "{EA11DC21-0EED-4EC7-9677-0AE8DC54921E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA11DC21-0EED-4EC7-9677-0AE8DC54921E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA11DC21-0EED-4EC7-9677-0AE8DC54921E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA11DC21-0EED-4EC7-9677-0AE8DC54921E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA11DC21-0EED-4EC7-9677-0AE8DC54921E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
