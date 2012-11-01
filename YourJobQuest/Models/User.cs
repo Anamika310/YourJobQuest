@@ -11,14 +11,33 @@ namespace YourJobQuest.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
-        public int userid { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
+        [Required]
+        [Display(Name = "FirstName")]
         public string firstName { get; set; }
+
+        [Required]
+        [Display(Name = "LastName")]
         public string lastName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email address")]
+        public string email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string password { get; set; }
+
+
+        public int userid { get; set; }
+
+
         public Nullable<int> ProfileID { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -26,7 +45,7 @@ namespace YourJobQuest.Models
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public string Phone { get; set; }
         public Nullable<bool> RootUser { get; set; }
-    
+
         public virtual Profile Profile { get; set; }
     }
 }

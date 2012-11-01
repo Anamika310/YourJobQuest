@@ -11,6 +11,7 @@ namespace YourJobQuest.Models
 {
     public class Globalvariables
     {
+        public static Boolean isValidUserName { get; set; }
         public static int UserId { get; set; }
         public static String UserName { get; set; }
         public static YourJobQuestEntities1 db { get; set; }

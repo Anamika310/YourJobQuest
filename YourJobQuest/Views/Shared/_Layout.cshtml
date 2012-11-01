@@ -9,10 +9,20 @@
     <div class="page">
         <div id="header">
             <div id="title">
-                <h1>My MVC Application</h1>
+                <h1>YourJobQuest.com</h1>
             </div>
             <div id="logindisplay">
-                @Html.Partial("_LogOnPartial")
+               @if (Convert.ToInt16(YourJobQuest.Models.Globalvariables.UserId) > 0)
+            {
+                <ul class="nav pull-right">
+                        <ul><p class="navbar-text"> @YourJobQuest.Models.Globalvariables.UserName&nbsp;&nbsp;(@YourJobQuest.Models.Globalvariables.email)&nbsp;@Html.ActionLink("Log Out", "LogOff", "Account")&nbsp;&nbsp;&nbsp;</p></ul>
+				      
+		        </ul>
+            }
+            else
+            { 
+               <ul><span class="label label-inverse navbar-text">@Html.ActionLink("Log On", "LogOn", "Account")</span></ul>
+            } 
             </div>
             <div id="menucontainer">
                 <ul id="menu">

@@ -19,3 +19,28 @@ c:\users\devtwo\documents\visual studio 2012\Projects\YourJobQuest\YourJobQuest\
 c:\users\devtwo\documents\visual studio 2012\Projects\YourJobQuest\YourJobQuest\obj\Debug\YourJobQuest.csprojResolveAssemblyReference.cache
 c:\users\devtwo\documents\visual studio 2012\Projects\YourJobQuest\YourJobQuest\obj\Debug\YourJobQuest.dll
 c:\users\devtwo\documents\visual studio 2012\Projects\YourJobQuest\YourJobQuest\obj\Debug\YourJobQuest.pdb
+C:\YourJobQuest\YourJobQuest\bin\YourJobQuest.dll
+C:\YourJobQuest\YourJobQuest\bin\YourJobQuest.pdb
+C:\YourJobQuest\YourJobQuest\bin\EntityFramework.dll
+C:\YourJobQuest\YourJobQuest\bin\Microsoft.Web.Infrastructure.dll
+C:\YourJobQuest\YourJobQuest\bin\System.Web.Helpers.dll
+C:\YourJobQuest\YourJobQuest\bin\System.Web.Mvc.dll
+C:\YourJobQuest\YourJobQuest\bin\System.Web.Providers.dll
+C:\YourJobQuest\YourJobQuest\bin\System.Web.Razor.dll
+C:\YourJobQuest\YourJobQuest\bin\System.Web.WebPages.Deployment.dll
+C:\YourJobQuest\YourJobQuest\bin\System.Web.WebPages.dll
+C:\YourJobQuest\YourJobQuest\bin\System.Web.WebPages.Razor.dll
+C:\YourJobQuest\YourJobQuest\bin\EntityFramework.xml
+C:\YourJobQuest\YourJobQuest\bin\System.Web.Helpers.xml
+C:\YourJobQuest\YourJobQuest\bin\System.Web.Mvc.xml
+C:\YourJobQuest\YourJobQuest\bin\System.Web.Razor.xml
+C:\YourJobQuest\YourJobQuest\bin\System.Web.WebPages.xml
+C:\YourJobQuest\YourJobQuest\bin\System.Web.WebPages.Deployment.xml
+C:\YourJobQuest\YourJobQuest\bin\System.Web.WebPages.Razor.xml
+C:\YourJobQuest\YourJobQuest\obj\Debug\YourJobQuest.csprojResolveAssemblyReference.cache
+C:\YourJobQuest\YourJobQuest\obj\Debug\YourJobQuest.dll
+C:\YourJobQuest\YourJobQuest\obj\Debug\YourJobQuest.pdb
+C:\Users\DevTwo\Documents\Visual Studio 2012\Projects\YourJobQuest\YourJobQuest\bin\Facebook.dll
+C:\Users\DevTwo\Documents\Visual Studio 2012\Projects\YourJobQuest\YourJobQuest\bin\Facebook.xml
+C:\YourJobQuest\YourJobQuest\bin\Facebook.dll
+C:\YourJobQuest\YourJobQuest\bin\Facebook.xml

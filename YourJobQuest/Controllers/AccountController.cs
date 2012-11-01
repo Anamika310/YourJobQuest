@@ -6,12 +6,39 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using YourJobQuest.Models;
-
+using System.Net.Mail;
 namespace YourJobQuest.Controllers
 {
     public class AccountController : Controller
     {
         YourJobQuestEntities1 db = new YourJobQuestEntities1();
+        public static string EncodePasswordToBase64(string password)
+        {
+            try
+            {
+                byte[] encData_byte = new byte[password.Length];
+                encData_byte = System.Text.Encoding.UTF8.GetBytes(password);
+                string encodedData = Convert.ToBase64String(encData_byte);
+                return encodedData;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error in base64Encode" + ex.Message);
+            }
+
+        }
+
+        public string DecodeFrom64(string encodedData)
+        {
+            System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
+            System.Text.Decoder utf8Decode = encoder.GetDecoder();
+            byte[] todecode_byte = Convert.FromBase64String(encodedData);
+            int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+            char[] decoded_char = new char[charCount];
+            utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+            string result = new String(decoded_char);
+            return result;
+        }
 
         public ActionResult LogOn()
         {
@@ -24,13 +51,13 @@ namespace YourJobQuest.Controllers
             if (ModelState.IsValid)
             {
                 var UserLogin = new YourJobQuestEntities1();
-
+                var pass = EncodePasswordToBase64(model.password);
                 var user = from u in UserLogin.Users
                            where u.email.Equals(model.email)
-                           where u.password.Equals(model.password)
+                           where u.password.Equals(pass)
                            select u;
                 if (user.FirstOrDefault() != null)
-                {
+                { 
                     HttpContext.Session.Add("YourJobQuestUser", user.FirstOrDefault().userid);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
@@ -45,6 +72,7 @@ namespace YourJobQuest.Controllers
                         Globalvariables.UserName = (from u in db.Users
                                                     where u.userid == Globalvariables.UserId
                                                     select u.firstName).Single().ToString();
+
                         Globalvariables.email = (from u in db.Users
                                                  where u.userid == Globalvariables.UserId
                                                  select u.email).Single().ToString();
@@ -58,54 +86,12 @@ namespace YourJobQuest.Controllers
             }
             return View();
         }
-//YourJobQuest job = new YourJobQuest();
-        //
-        // GET: /Account/LogOn
 
-        //public ActionResult LogOn()
-        //{
-
-         
-        //    return View();
-        //}
-
-        ////
-        //// POST: /Account/LogOn
-
-        //[HttpPost]
-        //public ActionResult LogOn(LogOnModel model, string returnUrl)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (Membership.ValidateUser(model.UserName, model.password))
-        //        {
-        //            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-        //            if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-        //                && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
-        //            {
-        //                return Redirect(returnUrl);
-        //            }
-        //            else
-        //            {
-        //                return RedirectToAction("Index", "Home");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("", "The user name or password provided is incorrect.");
-        //        }
-        //    }
-
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
-
-        ////
-        //// GET: /Account/LogOff
 
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
+            Globalvariables.UserId = 0;
 
             return RedirectToAction("Index", "Home");
         }
@@ -122,27 +108,71 @@ namespace YourJobQuest.Controllers
         // POST: /Account/Register
 
         [HttpPost]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(User model)
         {
-            if (ModelState.IsValid)
+            User usr = new User();
+            var uNameValidity = (from u in db.Users
+                                 select u.email).ToArray();
+            for (int i = 0; i < uNameValidity.Length; i++)
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
-
-                if (createStatus == MembershipCreateStatus.Success)
+                if (uNameValidity[i].Equals(model.email))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    Globalvariables.isValidUserName = false;
+                    TempData["message"] = "An account already exist for this e-mail. please try with another e-mail";
+
+                    break;
                 }
                 else
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    Globalvariables.isValidUserName = true;
                 }
-            }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            }
+            if (Globalvariables.isValidUserName == true)
+            {
+
+                if (ModelState.IsValid)
+                {
+                    User p = new User();
+
+                    p.firstName = model.firstName;
+                    p.lastName = model.lastName;
+
+                    p.email = model.email;
+                    p.password = EncodePasswordToBase64(model.password);
+                    p.RootUser = false;
+
+                    p.CreatedDate = DateTime.Now;
+                    p.LastModifiedDate = DateTime.Now;
+
+                    db.Users.Add(p);
+                    db.SaveChanges();
+                    return RedirectToAction("LogOn", "Account");
+
+
+                    //MailMessage message = new MailMessage();
+                    //message.From = new MailAddress("anamika@mtxbd.com");
+                    //message.To.Add(new MailAddress("anamika@mtxbd.com"));
+                    //message.Subject = " Welcome to Matrix";
+                    //message.Body = "Dear " + p.firstName + " " + p.lastName + "," + Environment.NewLine + "Thank you for registering with YourJObQuest" + Environment.NewLine + "Username: " + p.email + Environment.NewLine + "Password: " + p.password + Environment.NewLine + "Regards," + Environment.NewLine + "YourJobQuest Admin";
+
+                    //SmtpClient client = new SmtpClient();
+                    //client.Send(message);
+
+                }
+
+                return RedirectToAction("LogOn", "Account");
+
+            }
+            else
+            {
+                return RedirectToAction("Register", "Account");
+            }
+            
+
+
+
+
         }
 
         //
